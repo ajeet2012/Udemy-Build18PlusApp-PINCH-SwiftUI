@@ -32,6 +32,7 @@ struct ContentView: View {
             
             ZStack {
                 
+                Color.clear
                 //MARK: - Page Image
                 
                 Image("magazine-front-cover")
@@ -81,6 +82,14 @@ struct ContentView: View {
                     isAnimating = true
                 }
             }
+            .overlay (
+                InfoPanelView(scale: imageScale, offset: imageOffset)
+                    .padding(.horizontal)
+                    .padding(.top, 30)
+                ,
+                alignment: .top
+            )
+            .padding()
             
         }// : navigation
         .navigationViewStyle(.stack)
