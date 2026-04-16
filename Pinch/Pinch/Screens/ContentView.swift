@@ -82,6 +82,7 @@ struct ContentView: View {
                     isAnimating = true
                 }
             }
+            //MARK: - INFO PANEL
             .overlay (
                 InfoPanelView(scale: imageScale, offset: imageOffset)
                     .padding(.horizontal)
@@ -90,6 +91,62 @@ struct ContentView: View {
                 alignment: .top
             )
             .padding()
+            //MARK: -  CONTROLS
+            .overlay (
+                Group {
+                    HStack {
+                        
+                        // SCALE DOWN
+                        
+                        Button {
+                            withAnimation(.spring()) {
+                                if imageScale > 1 {
+                                    imageScale -= 1
+                                    if imageScale <= 1 {
+                                        resetImageState()
+                                    }
+                                }
+                            }
+                        } label: {
+                            ControlImageView(icon: "minus.magnifyingglass")
+                        }
+                        
+                        // RESET
+                        
+                        Button {
+                            resetImageState()
+                        } label: {
+                            ControlImageView(icon: "arrow.up.left.and.down.right.magnifyingglass")
+                        }
+                        
+                        // SCALE UP
+                        
+                        Button {
+                            withAnimation(.spring) {
+                                
+                                if imageScale < 5 {
+                                    imageScale += 1
+                                    if imageScale > 5 {
+                                        imageScale = 5
+                                    }
+                                }
+                                
+                            }
+                        } label: {
+                            ControlImageView(icon: "plus.magnifyingglass")
+                        }
+                        
+                    }//:CONTROLS
+                    .padding(EdgeInsets(top: 12, leading: 20, bottom: 12, trailing: 20))
+                    .background(.ultraThinMaterial)
+                    .cornerRadius(12)
+                    .opacity(isAnimating ? 1 : 0)
+
+                }
+                    .padding(.bottom, 30)
+                , alignment: .bottom
+                
+            )
             
         }// : navigation
         .navigationViewStyle(.stack)
