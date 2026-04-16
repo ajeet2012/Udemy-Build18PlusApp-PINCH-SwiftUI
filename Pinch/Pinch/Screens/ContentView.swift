@@ -55,7 +55,7 @@ struct ContentView: View {
                             resetImageState()
                         }
                     }
-                //MARK: - 1. DRAGE GESTURE
+                //MARK: - 2 . DRAGE GESTURE
                     .gesture(
                         DragGesture()
                             .onChanged { value in
@@ -71,7 +71,26 @@ struct ContentView: View {
                                 
                             }
                     )
-                
+                //MARK: - 3. MAGNIFICATION GESTURE
+                    .gesture(MagnificationGesture().onChanged { value in
+                        withAnimation(.linear(duration: 1)) {
+                            if imageScale >= 1 && imageScale <= 5 {
+                                imageScale = value
+                            } else if imageScale > 5 {
+                                imageScale = 5
+                            }
+                        }
+                    }
+                        .onEnded { _ in
+                           if imageScale > 5 {
+                             
+                              imageScale = 5
+                                
+                            } else if imageScale <= 1 {
+                                resetImageState()
+                           }
+                        }
+                    )
                 
                 
             }// : ZSTACK
@@ -141,7 +160,7 @@ struct ContentView: View {
                     .background(.ultraThinMaterial)
                     .cornerRadius(12)
                     .opacity(isAnimating ? 1 : 0)
-
+                    
                 }
                     .padding(.bottom, 30)
                 , alignment: .bottom
